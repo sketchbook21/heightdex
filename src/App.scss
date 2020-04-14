@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700,900");
+@import url("https://fonts.googleapis.com/css?family=Lilita+One");
+@import "~bootstrap/scss/bootstrap";
+
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+body {
+  padding: 0;
+  line-height: 1;
+  font-family: "Roboto", sans-serif;
+  color: #202020;
+  font-smooth: always;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cont {
+  border-radius: 0.25rem;
+  padding: 20px;
+}
+
+footer {
+  text-align: center;
+  font-family: "Lilita One", cursive;
+  font-size: 2rem;
+  color: #f0d907;
+  text-shadow: 2px 2px black;
+}
+
+#search {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid gray;
+  font-size: 3rem;
+  text-align: center;
+}
