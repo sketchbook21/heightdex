@@ -31,7 +31,7 @@ body {
 footer {
   text-align: center;
   font-family: "Lilita One", cursive;
-  font-size: 2rem;
+  font-size: 4vh;
   color: #f0d907;
   text-shadow: 2px 2px black;
 }
@@ -42,4 +42,9 @@ footer {
   border-bottom: 1px solid gray;
   font-size: 3rem;
   text-align: center;
+}
+
+.options-container {
+  height: 20rem;
+  overflow: auto;
 }
