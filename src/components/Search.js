@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, InputGroup, FormControl, Spinner } from "react-bootstrap";
+import { Row, InputGroup, FormControl } from "react-bootstrap";
+import SpriteTile from "./SpriteTile";
 
 const Search = ({
   display,
-  setDisplay,
   options,
   search,
   setPokedex,
@@ -11,31 +11,34 @@ const Search = ({
 }) => {
   return (
     <>
-      <InputGroup className="mt-5 mb-3">
-        <FormControl
-          placeholder="Search Pokemon"
-          id="search"
-          value={search}
-          onChange={(event) => handleInputChange(event.target.value)}
-        />
-      </InputGroup>
+      <Row className="w-80">
+        <InputGroup className="mt-5 mb-3">
+          <FormControl
+            placeholder="Search Pokemon"
+            id="search"
+            value={search}
+            onChange={(event) => handleInputChange(event.target.value)}
+            onFocus={() => handleInputChange("")}
+          />
+        </InputGroup>
+      </Row>
       {display && (
-        <div className="options-container w-100">
+        <Row className="options-container">
           {options
-            .filter(({ name }) => name.indexOf(search.toLowerCase()) > -1)
+            .filter(
+              ({ name }) =>
+                name.toLowerCase().indexOf(search.toLowerCase()) > -1
+            )
             .map((value, index) => {
               return (
-                <div
-                  className="option"
+                <SpriteTile
                   key={index}
-                  onClick={() => setPokedex(value.name)}
-                >
-                  <span>{value.name}</span>
-                  <img src={value.sprite} alt="pokemon" />
-                </div>
+                  pokemon={value}
+                  setPokedex={setPokedex}
+                />
               );
             })}
-        </div>
+        </Row>
       )}
     </>
   );
