@@ -23,9 +23,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+p.capitalize {
+  text-transform: capitalize;
+}
+
 .cont {
   border-radius: 0.25rem;
   padding: 20px;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.sprite {
+  height: 100px;
+  width: 100px;
 }
 
 footer {
@@ -45,6 +58,6 @@ footer {
 }
 
 .options-container {
-  height: 20rem;
+  max-height: 40rem;
   overflow: auto;
 }

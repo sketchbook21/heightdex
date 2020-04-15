@@ -29,7 +29,9 @@ const App = () => {
         response
           .json()
           .then(({ name, sprites: { front_default: sprite }, height }) => {
-            return pokemon.push({ name, sprite, height });
+            const capitalizedName =
+              name.charAt(0).toUpperCase() + name.slice(1);
+            return pokemon.push({ name: capitalizedName, sprite, height });
           })
       );
     });
@@ -42,9 +44,9 @@ const App = () => {
     setDisplay(false);
   };
 
-  const handleInputChange = (pokemon) => {
-    setSearch(pokemon);
-    if (search.length > 1) {
+  const handleInputChange = (input) => {
+    setSearch(input);
+    if (input.length > 1) {
       setDisplay(true);
     } else {
       setDisplay(false);
@@ -61,16 +63,13 @@ const App = () => {
   } else {
     content = (
       <Container>
-        <Row>
-          <Search
-            display={display}
-            setDisplay={setDisplay}
-            options={options}
-            search={search}
-            setPokedex={setPokedex}
-            handleInputChange={handleInputChange}
-          />
-        </Row>
+        <Search
+          display={display}
+          options={options}
+          search={search}
+          setPokedex={setPokedex}
+          handleInputChange={handleInputChange}
+        />
         <Row>
           <CompDisplay />
         </Row>
