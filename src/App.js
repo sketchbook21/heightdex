@@ -4,16 +4,29 @@ import "./App.scss";
 import Search from "./components/Search";
 import Footer from "./components/Footer";
 import CompDisplay from "./components/CompDisplay";
+import pokeball from "./images/pokeball.png";
 
 const App = () => {
   const [display, setDisplay] = useState(false);
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState("");
+  const [selectedPokemon, setSelectedPokemon] = useState({});
   const [loading, isLoading] = useState(false);
 
   useEffect(() => {
     fetchPokemon();
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
+
+  const handleClickOutside = (event) => {
+    if (event.target.id !== "search" && event.target.className !== "sprite") {
+      setDisplay(false);
+    }
+  };
 
   const fetchPokemon = async () => {
     isLoading(true);
@@ -28,10 +41,21 @@ const App = () => {
       return pokemonArr.map((response) =>
         response
           .json()
-          .then(({ name, sprites: { front_default: sprite }, height }) => {
+          .then(({ id, name, sprites: { front_default: sprite }, height }) => {
             const capitalizedName =
               name.charAt(0).toUpperCase() + name.slice(1);
-            return pokemon.push({ name: capitalizedName, sprite, height });
+            if (sprite === null) {
+              sprite = pokeball;
+            }
+            pokemon.push({
+              id,
+              name: capitalizedName,
+              sprite,
+              height,
+            });
+            pokemon.sort((a, b) => {
+              return a.id > b.id ? 1 : -1;
+            });
           })
       );
     });
@@ -39,18 +63,14 @@ const App = () => {
     isLoading(false);
   };
 
-  const setPokedex = (poke) => {
-    setSearch(poke);
+  const setPokedex = (pokemon) => {
+    setSearch(pokemon.name);
+    setSelectedPokemon({
+      id: pokemon.id,
+      name: pokemon.name,
+      height: pokemon.height,
+    });
     setDisplay(false);
-  };
-
-  const handleInputChange = (input) => {
-    setSearch(input);
-    if (input.length > 1) {
-      setDisplay(true);
-    } else {
-      setDisplay(false);
-    }
   };
 
   let content;
@@ -65,13 +85,14 @@ const App = () => {
       <Container>
         <Search
           display={display}
+          setDisplay={setDisplay}
           options={options}
           search={search}
+          setSearch={setSearch}
           setPokedex={setPokedex}
-          handleInputChange={handleInputChange}
         />
         <Row>
-          <CompDisplay />
+          <CompDisplay pokemon={selectedPokemon} />
         </Row>
       </Container>
     );
