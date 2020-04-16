@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/heightdex/static/css/main.eccfd664.chunk.css",
+    "main.js": "/heightdex/static/js/main.dc0e5561.chunk.js",
+    "main.js.map": "/heightdex/static/js/main.dc0e5561.chunk.js.map",
+    "runtime-main.js": "/heightdex/static/js/runtime-main.dbcf57ba.js",
+    "runtime-main.js.map": "/heightdex/static/js/runtime-main.dbcf57ba.js.map",
+    "static/js/2.6dcb245d.chunk.js": "/heightdex/static/js/2.6dcb245d.chunk.js",
+    "static/js/2.6dcb245d.chunk.js.map": "/heightdex/static/js/2.6dcb245d.chunk.js.map",
+    "index.html": "/heightdex/index.html",
+    "precache-manifest.b8fbbee1722032c5ce98fc4f50a925d3.js": "/heightdex/precache-manifest.b8fbbee1722032c5ce98fc4f50a925d3.js",
+    "service-worker.js": "/heightdex/service-worker.js",
+    "static/css/main.eccfd664.chunk.css.map": "/heightdex/static/css/main.eccfd664.chunk.css.map",
+    "static/js/2.6dcb245d.chunk.js.LICENSE.txt": "/heightdex/static/js/2.6dcb245d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.dbcf57ba.js",
+    "static/js/2.6dcb245d.chunk.js",
+    "static/css/main.eccfd664.chunk.css",
+    "static/js/main.dc0e5561.chunk.js"
+  ]
+}
