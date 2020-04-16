@@ -4,11 +4,17 @@ import SpriteTile from "./SpriteTile";
 
 const Search = ({
   display,
+  setDisplay,
   options,
   search,
+  setSearch,
   setPokedex,
-  handleInputChange,
 }) => {
+  const handleClick = () => {
+    setDisplay(true);
+    setSearch("");
+  };
+
   return (
     <>
       <Row className="w-80">
@@ -17,8 +23,8 @@ const Search = ({
             placeholder="Search Pokemon"
             id="search"
             value={search}
-            onChange={(event) => handleInputChange(event.target.value)}
-            onFocus={() => handleInputChange("")}
+            onChange={(event) => setSearch(event.target.value)}
+            onClick={handleClick}
           />
         </InputGroup>
       </Row>

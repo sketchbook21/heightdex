@@ -29,7 +29,8 @@ p.capitalize {
 
 .cont {
   border-radius: 0.25rem;
-  padding: 20px;
+  padding-top: 10rem;
+  text-align: center;
 }
 
 .align-center {
@@ -38,7 +39,7 @@ p.capitalize {
 
 .sprite {
   height: 100px;
-  width: 100px;
+  width: auto;
 }
 
 footer {
@@ -60,4 +61,8 @@ footer {
 .options-container {
   max-height: 40rem;
   overflow: auto;
+}
+
+.number-badge {
+  background-color: rgb(230, 230, 230);
 }
