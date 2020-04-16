@@ -4,7 +4,6 @@ import "./App.scss";
 import Search from "./components/Search";
 import Footer from "./components/Footer";
 import CompDisplay from "./components/CompDisplay";
-import pokeball from "./images/pokeball.png";
 
 const App = () => {
   const [display, setDisplay] = useState(false);
@@ -45,7 +44,7 @@ const App = () => {
             const capitalizedName =
               name.charAt(0).toUpperCase() + name.slice(1);
             if (sprite === null) {
-              sprite = pokeball;
+              sprite = "/pokeball.jpg";
             }
             pokemon.push({
               id,
