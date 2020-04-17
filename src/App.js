@@ -44,7 +44,7 @@ const App = () => {
             const capitalizedName =
               name.charAt(0).toUpperCase() + name.slice(1);
             if (sprite === null) {
-              sprite = "/pokeball.jpg";
+              sprite = "/images/pokeball.jpg";
             }
             pokemon.push({
               id,
@@ -82,14 +82,16 @@ const App = () => {
   } else {
     content = (
       <Container>
-        <Search
-          display={display}
-          setDisplay={setDisplay}
-          options={options}
-          search={search}
-          setSearch={setSearch}
-          setPokedex={setPokedex}
-        />
+        <Container className="search-container">
+          <Search
+            display={display}
+            setDisplay={setDisplay}
+            options={options}
+            search={search}
+            setSearch={setSearch}
+            setPokedex={setPokedex}
+          />
+        </Container>
         <Row>
           <CompDisplay pokemon={selectedPokemon} />
         </Row>

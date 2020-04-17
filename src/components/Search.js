@@ -17,8 +17,8 @@ const Search = ({
 
   return (
     <>
-      <Row className="w-80">
-        <InputGroup className="mt-5 mb-3">
+      <Row>
+        <InputGroup>
           <FormControl
             placeholder="Search Pokemon"
             id="search"
