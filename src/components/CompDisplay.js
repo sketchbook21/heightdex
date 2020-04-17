@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Image as RBImage, Col } from "react-bootstrap";
+import compHeights from "../helpers/compHeights";
 
 const CompDisplay = ({ pokemon, selectedComp }) => {
   const [dimensions, setDimensions] = useState({});
   const [dimFetched, setDimFetched] = useState(false);
-  const { name, height: pokemonHeight } = pokemon;
+  const { name, height } = pokemon;
 
   useEffect(() => {
     setDimFetched(false);
@@ -30,28 +31,31 @@ const CompDisplay = ({ pokemon, selectedComp }) => {
       setDimFetched(true);
     }
   }
+
   const pikachuDimensions = { width: 360, height: 337 };
 
+  const pokemonHeight = height * 10;
   let compHeight;
   let compPath;
   if (selectedComp === "Boy") {
     compPath = "/images/boy.jpg";
-    compHeight = 16.5;
+    compHeight = compHeights.boy;
   } else if (selectedComp === "Girl") {
     compPath = "/images/girl.jpg";
-    compHeight = 15.5;
+    compHeight = compHeights.girl;
   } else if (selectedComp === "Shaq") {
     compPath = "/images/shaq.jpg";
-    compHeight = 21.6;
+    compHeight = compHeights.shaq;
   } else if (selectedComp === "Giraffe") {
     compPath = "/images/giraffe.jpg";
-    compHeight = 53.3;
+    compHeight = compHeights.giraffe;
   }
 
   let pokemonWidth;
   let humanWidth;
   if (!pokemonHeight) {
-    let humanPixels = pikachuDimensions.height * (compHeight / 4);
+    let humanPixels =
+      pikachuDimensions.height * (compHeight / compHeights.pikachu);
     pokemonWidth =
       pikachuDimensions.width / (pikachuDimensions.width + humanPixels);
     humanWidth = 1 - pokemonWidth;

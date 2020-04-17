@@ -84,14 +84,6 @@ p.capitalize {
   background-color: white;
   overflow: auto;
   border-bottom: 1px solid rgb(214, 214, 214);
-  // z-index: 10;
-  // position: absolute;
-  // margin: auto;
-
-  // width: 71%;
-  // top: 47%;
-  // left: 50%;
-  // transform: translate(-50%, -50%);
 }
 
 .number-badge {
@@ -103,7 +95,12 @@ p.capitalize {
 }
 
 .height-input button {
-  border-radius: 0 0.25rem 0.25rem 0 !important;
+  border-radius: 0;
+}
+
+#input-alert {
+  width: 355px;
+  text-align: center;
 }
 
 @media (max-width: 600px) {

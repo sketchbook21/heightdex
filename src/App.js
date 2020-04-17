@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Row,
-  Spinner,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { Container, Row, Spinner, Alert } from "react-bootstrap";
 import "./App.scss";
 import Search from "./components/Search";
 import Footer from "./components/Footer";
@@ -18,7 +12,9 @@ const App = () => {
   const [search, setSearch] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState({});
   const [selectedComp, setSelectedComp] = useState("Boy");
+  const [compHeight, setCompHeight] = useState(0);
   const [loading, isLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   useEffect(() => {
     fetchPokemon();
@@ -111,12 +107,20 @@ const App = () => {
     <>
       {content}
       <div className="mt-auto">
+        {alert && (
+          <div className="mx-auto" id="input-alert">
+            <Alert variant="warning">Please enter your height</Alert>
+          </div>
+        )}
         {!loading && (
           <CompSelector
             selectedComp={selectedComp}
             setSelectedComp={setSelectedComp}
+            setCompHeight={setCompHeight}
+            setAlert={setAlert}
           />
         )}
+
         <Footer />
       </div>
     </>
