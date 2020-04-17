@@ -82,14 +82,16 @@ const App = () => {
   } else {
     content = (
       <Container>
-        <Search
-          display={display}
-          setDisplay={setDisplay}
-          options={options}
-          search={search}
-          setSearch={setSearch}
-          setPokedex={setPokedex}
-        />
+        <Container className="px-5">
+          <Search
+            display={display}
+            setDisplay={setDisplay}
+            options={options}
+            search={search}
+            setSearch={setSearch}
+            setPokedex={setPokedex}
+          />
+        </Container>
         <Row>
           <CompDisplay pokemon={selectedPokemon} />
         </Row>
