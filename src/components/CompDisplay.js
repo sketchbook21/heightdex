@@ -1,41 +1,68 @@
-import React from "react";
-import { Container, Row, Image, Col } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Container, Row, Image as RBImage, Col } from "react-bootstrap";
 
 const CompDisplay = ({ pokemon }) => {
+  const [dimensions, setDimensions] = useState({});
+  const [dimFetched, setDimFetched] = useState(false);
   const { name, height: pokemonHeight } = pokemon;
+
+  useEffect(() => {
+    setDimFetched(false);
+  }, [pokemon.name]);
+
+  function checkDimensions(url) {
+    var img = new Image();
+    img.onload = function () {
+      setDimensions({
+        width: this.width,
+        height: this.height,
+      });
+    };
+    img.src = url;
+    return img;
+  }
+
   let pokemonUrl = "https://img.pokemondb.net/artwork/pikachu.jpg";
   if (name) {
     pokemonUrl = `https://img.pokemondb.net/artwork/${name.toLowerCase()}.jpg`;
+    if (!dimFetched) {
+      checkDimensions(pokemonUrl);
+      setDimFetched(true);
+    }
   }
-
+  const pikachuDimensions = { width: 360, height: 337 };
   const humanHeight = 16.5;
-  const maxImageHeight = 300;
-  let pokemonImageHeight = maxImageHeight;
-  let personImageHeight = maxImageHeight;
 
+  let pokemonWidth;
+  let humanWidth;
   if (!pokemonHeight) {
-    pokemonImageHeight = maxImageHeight * (4 / humanHeight);
-  } else if (pokemonHeight > humanHeight) {
-    personImageHeight = maxImageHeight * (16.5 / pokemonHeight);
+    let humanPixels = pikachuDimensions.height * (humanHeight / 4);
+    pokemonWidth =
+      pikachuDimensions.width / (pikachuDimensions.width + humanPixels);
+    humanWidth = 1 - pokemonWidth;
   } else {
-    pokemonImageHeight = maxImageHeight * (pokemonHeight / humanHeight);
+    let humanPixels = dimensions.height * (humanHeight / pokemonHeight);
+    pokemonWidth = dimensions.width / (dimensions.width + humanPixels);
+    humanWidth = 1 - pokemonWidth;
   }
 
   return (
     <Container className="cont">
-      <Row className="align-items-end">
-        <Col className="d-flex justify-content-end">
-          <Image
-            src="https://cdn.clipart.email/cd1a0326018498328550a0d2fb72666c_gray-silhouette-of-a-man-clip-art-at-clkercom-vector-clip-art-_204-592.png"
+      <Row className="d-flex mx-auto">
+        <Col className="d-flex justify-content-center align-items-end">
+          <RBImage
+            src="/images/boy.jpg"
             rounded
-            style={{ height: `${personImageHeight}px`, padding: "0 50px" }}
+            style={{
+              width: `${humanWidth * 90}%`,
+            }}
           />
-        </Col>
-        <Col className="d-flex justify-content-start">
-          <Image
+          <RBImage
             src={pokemonUrl}
             rounded
-            style={{ height: `${pokemonImageHeight}px` }}
+            style={{
+              width: `${pokemonWidth * 90}%`,
+            }}
           />
         </Col>
       </Row>

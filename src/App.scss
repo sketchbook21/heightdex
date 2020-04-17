@@ -29,9 +29,22 @@ p.capitalize {
 }
 
 .cont {
+  margin-top: 25vh;
   border-radius: 0.25rem;
-  padding-top: 10rem;
   text-align: center;
+  width: 50%;
+}
+
+.search-container {
+  width: 80%;
+  z-index: 1;
+  position: absolute;
+  margin: auto;
+  overflow: hidden;
+
+  left: 0;
+  right: 0;
+  top: 5%;
 }
 
 .align-center {
@@ -65,14 +78,22 @@ p.capitalize {
   background-color: white;
   overflow: auto;
   border-bottom: 1px solid rgb(214, 214, 214);
-  z-index: 10;
-  position: absolute;
-  margin: auto;
+  // z-index: 10;
+  // position: absolute;
+  // margin: auto;
 
-  width: 71%;
-  top: 47%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  // width: 71%;
+  // top: 47%;
+  // left: 50%;
+  // transform: translate(-50%, -50%);
+}
+
+.number-badge {
+  background-color: rgb(230, 230, 230);
+}
+
+.finger {
+  cursor: pointer;
 }
 
 @media (max-width: 600px) {
@@ -83,12 +104,8 @@ p.capitalize {
   #search {
     font-size: 1.2rem;
   }
-}
 
-.number-badge {
-  background-color: rgb(230, 230, 230);
-}
-
-.finger {
-  cursor: pointer;
+  .cont {
+    width: 100%;
+  }
 }
