@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Image as RBImage, Col } from "react-bootstrap";
 
-const CompDisplay = ({ pokemon }) => {
+const CompDisplay = ({ pokemon, selectedComp }) => {
   const [dimensions, setDimensions] = useState({});
   const [dimFetched, setDimFetched] = useState(false);
   const { name, height: pokemonHeight } = pokemon;
@@ -31,17 +31,32 @@ const CompDisplay = ({ pokemon }) => {
     }
   }
   const pikachuDimensions = { width: 360, height: 337 };
-  const humanHeight = 16.5;
+
+  let compHeight;
+  let compPath;
+  if (selectedComp === "Boy") {
+    compPath = "/images/boy.jpg";
+    compHeight = 16.5;
+  } else if (selectedComp === "Girl") {
+    compPath = "/images/girl.jpg";
+    compHeight = 15.5;
+  } else if (selectedComp === "Shaq") {
+    compPath = "/images/shaq.jpg";
+    compHeight = 21.6;
+  } else if (selectedComp === "Giraffe") {
+    compPath = "/images/giraffe.jpg";
+    compHeight = 53.3;
+  }
 
   let pokemonWidth;
   let humanWidth;
   if (!pokemonHeight) {
-    let humanPixels = pikachuDimensions.height * (humanHeight / 4);
+    let humanPixels = pikachuDimensions.height * (compHeight / 4);
     pokemonWidth =
       pikachuDimensions.width / (pikachuDimensions.width + humanPixels);
     humanWidth = 1 - pokemonWidth;
   } else {
-    let humanPixels = dimensions.height * (humanHeight / pokemonHeight);
+    let humanPixels = dimensions.height * (compHeight / pokemonHeight);
     pokemonWidth = dimensions.width / (dimensions.width + humanPixels);
     humanWidth = 1 - pokemonWidth;
   }
@@ -51,7 +66,7 @@ const CompDisplay = ({ pokemon }) => {
       <Row className="d-flex mx-auto">
         <Col className="d-flex justify-content-center align-items-end">
           <RBImage
-            src="/images/boy.jpg"
+            src={compPath}
             rounded
             style={{
               width: `${humanWidth * 90}%`,

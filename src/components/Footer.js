@@ -3,9 +3,9 @@ import InfoIcon from "../icons/InfoIcon";
 
 const Footer = () => {
   return (
-    <div className="d-flex footer mt-auto py-3 px-3 bg-dark justify-content-between">
+    <div className="d-flex footer justify-content-between py-3 bg-dark">
       HeightDex
-      <div className="align-self-center mr-2 finger">
+      <div className="align-self-center finger">
         <InfoIcon />
       </div>
     </div>

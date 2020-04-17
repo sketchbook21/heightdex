@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Spinner } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Spinner,
+  DropdownButton,
+  Dropdown,
+} from "react-bootstrap";
 import "./App.scss";
 import Search from "./components/Search";
 import Footer from "./components/Footer";
 import CompDisplay from "./components/CompDisplay";
+import CompSelector from "./components/CompSelector";
 
 const App = () => {
   const [display, setDisplay] = useState(false);
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState({});
+  const [selectedComp, setSelectedComp] = useState("Boy");
   const [loading, isLoading] = useState(false);
 
   useEffect(() => {
@@ -93,7 +101,7 @@ const App = () => {
           />
         </Container>
         <Row>
-          <CompDisplay pokemon={selectedPokemon} />
+          <CompDisplay pokemon={selectedPokemon} selectedComp={selectedComp} />
         </Row>
       </Container>
     );
@@ -102,7 +110,15 @@ const App = () => {
   return (
     <>
       {content}
-      <Footer />
+      <div className="mt-auto">
+        {!loading && (
+          <CompSelector
+            selectedComp={selectedComp}
+            setSelectedComp={setSelectedComp}
+          />
+        )}
+        <Footer />
+      </div>
     </>
   );
 };
