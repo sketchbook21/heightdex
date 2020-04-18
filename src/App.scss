@@ -29,10 +29,10 @@ p.capitalize {
 }
 
 .cont {
-  margin-top: 25vh;
+  margin-top: 20vh;
   border-radius: 0.25rem;
   text-align: center;
-  width: 50%;
+  width: 55%;
 }
 
 .search-container {
@@ -80,7 +80,7 @@ p.capitalize {
 }
 
 .options-container {
-  max-height: 75vh;
+  max-height: 70vh;
   background-color: white;
   overflow: auto;
   border-bottom: 1px solid rgb(214, 214, 214);
@@ -105,7 +105,7 @@ p.capitalize {
 
 @media (max-width: 600px) {
   .options-container {
-    max-height: 72vh;
+    max-height: 65vh;
   }
 
   #search {
@@ -114,5 +114,9 @@ p.capitalize {
 
   .cont {
     width: 100%;
+  }
+
+  #input-alert {
+    width: 345px;
   }
 }

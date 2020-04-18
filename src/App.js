@@ -12,7 +12,7 @@ const App = () => {
   const [search, setSearch] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState({});
   const [selectedComp, setSelectedComp] = useState("Boy");
-  const [compHeight, setCompHeight] = useState(0);
+  const [customHeight, setCustomHeight] = useState(0);
   const [loading, isLoading] = useState(false);
   const [alert, setAlert] = useState(false);
 
@@ -26,7 +26,11 @@ const App = () => {
   }, []);
 
   const handleClickOutside = (event) => {
-    if (event.target.id !== "search" && event.target.className !== "sprite") {
+    if (
+      event.target.id !== "search" &&
+      event.target.className !== "sprite" &&
+      event.target.className !== "options-container row"
+    ) {
       setDisplay(false);
     }
   };
@@ -97,7 +101,11 @@ const App = () => {
           />
         </Container>
         <Row>
-          <CompDisplay pokemon={selectedPokemon} selectedComp={selectedComp} />
+          <CompDisplay
+            pokemon={selectedPokemon}
+            selectedComp={selectedComp}
+            customHeight={customHeight}
+          />
         </Row>
       </Container>
     );
@@ -109,14 +117,14 @@ const App = () => {
       <div className="mt-auto">
         {alert && (
           <div className="mx-auto" id="input-alert">
-            <Alert variant="warning">Please enter your height</Alert>
+            <Alert variant="warning">Please enter height</Alert>
           </div>
         )}
         {!loading && (
           <CompSelector
             selectedComp={selectedComp}
             setSelectedComp={setSelectedComp}
-            setCompHeight={setCompHeight}
+            setCustomHeight={setCustomHeight}
             setAlert={setAlert}
           />
         )}

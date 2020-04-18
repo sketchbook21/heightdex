@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Row, Image as RBImage, Col } from "react-bootstrap";
 import compHeights from "../helpers/compHeights";
 
-const CompDisplay = ({ pokemon, selectedComp }) => {
+const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
   const [dimensions, setDimensions] = useState({});
   const [dimFetched, setDimFetched] = useState(false);
   const { name, height } = pokemon;
@@ -25,7 +25,11 @@ const CompDisplay = ({ pokemon, selectedComp }) => {
 
   let pokemonUrl = "https://img.pokemondb.net/artwork/pikachu.jpg";
   if (name) {
-    pokemonUrl = `https://img.pokemondb.net/artwork/${name.toLowerCase()}.jpg`;
+    if (name === "Mimikyu-disguised") {
+      pokemonUrl = `https://img.pokemondb.net/artwork/mimikyu.jpg`;
+    } else {
+      pokemonUrl = `https://img.pokemondb.net/artwork/${name.toLowerCase()}.jpg`;
+    }
     if (!dimFetched) {
       checkDimensions(pokemonUrl);
       setDimFetched(true);
@@ -39,10 +43,10 @@ const CompDisplay = ({ pokemon, selectedComp }) => {
   let compPath;
   if (selectedComp === "Boy") {
     compPath = "/images/boy.jpg";
-    compHeight = compHeights.boy;
+    compHeight = customHeight > 0 ? customHeight : compHeights.boy;
   } else if (selectedComp === "Girl") {
     compPath = "/images/girl.jpg";
-    compHeight = compHeights.girl;
+    compHeight = customHeight > 0 ? customHeight : compHeights.girl;
   } else if (selectedComp === "Shaq") {
     compPath = "/images/shaq.jpg";
     compHeight = compHeights.shaq;

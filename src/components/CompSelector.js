@@ -12,7 +12,7 @@ import compHeights from "../helpers/compHeights";
 const CompSelector = ({
   selectedComp,
   setSelectedComp,
-  setCompHeight,
+  setCustomHeight,
   setAlert,
 }) => {
   const [units, setUnits] = useState("ft");
@@ -36,10 +36,8 @@ const CompSelector = ({
     return { feet, inches };
   };
 
-  const convertToCm = ({ feet, inches }) => {
-    const inchesFromFeet = feet * 12;
-    const totalInches = inchesFromFeet + +inches;
-    const cm = Math.round(totalInches * 2.54);
+  const convertToCm = (inches) => {
+    const cm = Math.round(inches * 2.54);
 
     return cm;
   };
@@ -58,44 +56,72 @@ const CompSelector = ({
       setHeightFeet("");
       setHeightInches("");
       setHeightCm("");
+      setCustomHeight(0);
     }
   };
 
   const handleInputChange = ({ event, inputNumber }) => {
-    if (units == "ft") {
-      if (inputNumber === 1) {
-        setHeightFeet(event.target.value);
+    if (
+      event &&
+      event.target &&
+      event.target.validity &&
+      event.target.validity.valid
+    ) {
+      if (units == "ft") {
+        if (inputNumber === 1) {
+          setHeightFeet(+event.target.value);
+        } else {
+          setHeightInches(+event.target.value);
+        }
       } else {
-        setHeightInches(event.target.value);
+        setHeightCm(+event.target.value);
       }
-    } else {
-      setHeightCm(event.target.value);
     }
   };
 
-  const handleSubmitClick = () => {
+  const handleInputClick = ({ inputNumber }) => {
     if (units === "ft") {
-      if (heightFeet > 0) {
-        setHeightFeet(`${heightFeet}'`);
-        if (heightInches === "") {
-          setHeightInches(`0"`);
-        } else {
-          setHeightInches(`${heightInches}"`);
-        }
+      if (inputNumber === 1) {
+        setHeightFeet("");
+      } else {
+        setHeightInches("");
+      }
+    } else {
+      setHeightCm("");
+    }
+  };
+
+  const handleSubmit = () => {
+    if (units === "ft") {
+      const totalInches = +heightFeet * 12 + +heightInches;
+      if (totalInches > 0) {
+        const feet = Math.floor(totalInches / 12);
+        const inches = totalInches % feet;
+        setHeightFeet(feet);
+        setHeightInches(inches);
+
+        const convertedHeight = convertToCm(totalInches);
+        setHeightCm(convertedHeight);
+        // send custom height to parent
+        setCustomHeight(convertedHeight);
       } else {
         triggerAlert();
-        return;
+        setHeightFeet("");
+        setHeightInches("");
       }
-      const convertedHeight = convertToCm({
-        feet: heightFeet,
-        inches: heightInches,
-      });
-      setHeightCm(convertedHeight);
-    } else if (units === "cm") {
-      alert("hellow");
+      return;
+    } else {
+      if (heightCm > 0) {
+        const convertedHeight = convertToInches(heightCm);
+        setHeightFeet(convertedHeight.feet);
+        setHeightInches(convertedHeight.inches);
+        // send custom height to parent
+        setCustomHeight(heightCm);
+      } else {
+        triggerAlert();
+        setHeightCm("");
+      }
     }
-
-    // setCompHeight();
   };
 
   const triggerAlert = () => {
@@ -155,6 +181,7 @@ const CompSelector = ({
           value={displayUnits}
           pattern="[0-9]*"
           onChange={(event) => handleInputChange({ event, inputNumber: 1 })}
+          onClick={() => handleInputClick({ inputNumber: 1 })}
           disabled={disabled}
         />
         {units === "ft" && (
@@ -163,8 +190,9 @@ const CompSelector = ({
             disabled={disabled}
             value={heightInches}
             pattern="[0-9]*"
+            max="11"
             onChange={(event) => handleInputChange({ event, inputNumber: 2 })}
-            // onClick={handleClick}
+            onClick={() => handleInputClick({ inputNumber: 2 })}
           />
         )}
         <DropdownButton
@@ -181,7 +209,7 @@ const CompSelector = ({
           <Button
             variant="info"
             style={{ zIndex: "0" }}
-            onClick={() => handleSubmitClick()}
+            onClick={() => handleSubmit()}
           >
             Submit
           </Button>
