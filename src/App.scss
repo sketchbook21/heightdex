@@ -60,7 +60,7 @@ p.capitalize {
   text-align: center;
   font-family: "Lilita One", cursive;
   font-size: 4vh;
-  color: #f0d907;
+  color: #ffc10a;
   text-shadow: 2px 2px black;
   padding: 0 1.5rem;
 }
@@ -101,6 +101,16 @@ p.capitalize {
 #input-alert {
   width: 355px;
   text-align: center;
+}
+
+#unit-selector {
+  color: black;
+  background-color: rgb(206, 206, 206);
+  border-color: rgb(206, 206, 206);
+}
+
+#spinner-container {
+  height: 75vh;
 }
 
 @media (max-width: 600px) {

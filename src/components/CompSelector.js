@@ -45,8 +45,8 @@ const CompSelector = ({
   const handleCompChange = ({ name, height }) => {
     setSelectedComp(name);
     const convertedHeight = convertToInches(height);
-    setHeightFeet(`${convertedHeight.feet}'`);
-    setHeightInches(`${convertedHeight.inches}"`);
+    setHeightFeet(convertedHeight.feet);
+    setHeightInches(convertedHeight.inches);
     setHeightCm(height);
 
     if (name === "Shaq" || name === "Giraffe") {
@@ -137,7 +137,6 @@ const CompSelector = ({
       style={{ marginBottom: "5vh" }}
     >
       <DropdownButton
-        id="dropdown-basic-button"
         title={selectedComp}
         drop="up"
         variant="warning"
@@ -196,7 +195,7 @@ const CompSelector = ({
           />
         )}
         <DropdownButton
-          id="dropdown-basic-button"
+          id="unit-selector"
           title={units}
           drop="up"
           variant="secondary"
