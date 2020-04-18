@@ -67,7 +67,7 @@ const CompSelector = ({
       event.target.validity &&
       event.target.validity.valid
     ) {
-      if (units == "ft") {
+      if (units === "ft") {
         if (inputNumber === 1) {
           setHeightFeet(+event.target.value);
         } else {
@@ -96,7 +96,7 @@ const CompSelector = ({
       const totalInches = +heightFeet * 12 + +heightInches;
       if (totalInches > 0) {
         const feet = Math.floor(totalInches / 12);
-        const inches = totalInches % feet;
+        const inches = totalInches % 12;
         setHeightFeet(feet);
         setHeightInches(inches);
 
