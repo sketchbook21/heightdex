@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Spinner } from "react-bootstrap";
+import { Container, Row, Spinner, Alert } from "react-bootstrap";
 import "./App.scss";
 import Search from "./components/Search";
 import Footer from "./components/Footer";
 import CompDisplay from "./components/CompDisplay";
+import CompSelector from "./components/CompSelector";
 
 const App = () => {
   const [display, setDisplay] = useState(false);
   const [options, setOptions] = useState([]);
   const [search, setSearch] = useState("");
   const [selectedPokemon, setSelectedPokemon] = useState({});
+  const [selectedComp, setSelectedComp] = useState("Boy");
+  const [customHeight, setCustomHeight] = useState(0);
   const [loading, isLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   useEffect(() => {
     fetchPokemon();
@@ -22,7 +26,11 @@ const App = () => {
   }, []);
 
   const handleClickOutside = (event) => {
-    if (event.target.id !== "search" && event.target.className !== "sprite") {
+    if (
+      event.target.id !== "search" &&
+      event.target.className !== "sprite" &&
+      event.target.className !== "options-container row"
+    ) {
       setDisplay(false);
     }
   };
@@ -93,7 +101,11 @@ const App = () => {
           />
         </Container>
         <Row>
-          <CompDisplay pokemon={selectedPokemon} />
+          <CompDisplay
+            pokemon={selectedPokemon}
+            selectedComp={selectedComp}
+            customHeight={customHeight}
+          />
         </Row>
       </Container>
     );
@@ -102,7 +114,23 @@ const App = () => {
   return (
     <>
       {content}
-      <Footer />
+      <div className="mt-auto">
+        {alert && (
+          <div className="mx-auto" id="input-alert">
+            <Alert variant="warning">Please enter height</Alert>
+          </div>
+        )}
+        {!loading && (
+          <CompSelector
+            selectedComp={selectedComp}
+            setSelectedComp={setSelectedComp}
+            setCustomHeight={setCustomHeight}
+            setAlert={setAlert}
+          />
+        )}
+
+        <Footer />
+      </div>
     </>
   );
 };

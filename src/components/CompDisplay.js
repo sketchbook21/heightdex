@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Image as RBImage, Col } from "react-bootstrap";
+import compHeights from "../helpers/compHeights";
 
-const CompDisplay = ({ pokemon }) => {
+const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
   const [dimensions, setDimensions] = useState({});
   const [dimFetched, setDimFetched] = useState(false);
-  const { name, height: pokemonHeight } = pokemon;
+  const { name, height } = pokemon;
 
   useEffect(() => {
     setDimFetched(false);
@@ -24,24 +25,46 @@ const CompDisplay = ({ pokemon }) => {
 
   let pokemonUrl = "https://img.pokemondb.net/artwork/pikachu.jpg";
   if (name) {
-    pokemonUrl = `https://img.pokemondb.net/artwork/${name.toLowerCase()}.jpg`;
+    if (name === "Mimikyu-disguised") {
+      pokemonUrl = `https://img.pokemondb.net/artwork/mimikyu.jpg`;
+    } else {
+      pokemonUrl = `https://img.pokemondb.net/artwork/${name.toLowerCase()}.jpg`;
+    }
     if (!dimFetched) {
       checkDimensions(pokemonUrl);
       setDimFetched(true);
     }
   }
+
   const pikachuDimensions = { width: 360, height: 337 };
-  const humanHeight = 16.5;
+
+  const pokemonHeight = height * 10;
+  let compHeight;
+  let compPath;
+  if (selectedComp === "Boy") {
+    compPath = "/images/boy.jpg";
+    compHeight = customHeight > 0 ? customHeight : compHeights.boy;
+  } else if (selectedComp === "Girl") {
+    compPath = "/images/girl.jpg";
+    compHeight = customHeight > 0 ? customHeight : compHeights.girl;
+  } else if (selectedComp === "Shaq") {
+    compPath = "/images/shaq.jpg";
+    compHeight = compHeights.shaq;
+  } else if (selectedComp === "Giraffe") {
+    compPath = "/images/giraffe.jpg";
+    compHeight = compHeights.giraffe;
+  }
 
   let pokemonWidth;
   let humanWidth;
   if (!pokemonHeight) {
-    let humanPixels = pikachuDimensions.height * (humanHeight / 4);
+    let humanPixels =
+      pikachuDimensions.height * (compHeight / compHeights.pikachu);
     pokemonWidth =
       pikachuDimensions.width / (pikachuDimensions.width + humanPixels);
     humanWidth = 1 - pokemonWidth;
   } else {
-    let humanPixels = dimensions.height * (humanHeight / pokemonHeight);
+    let humanPixels = dimensions.height * (compHeight / pokemonHeight);
     pokemonWidth = dimensions.width / (dimensions.width + humanPixels);
     humanWidth = 1 - pokemonWidth;
   }
@@ -51,7 +74,7 @@ const CompDisplay = ({ pokemon }) => {
       <Row className="d-flex mx-auto">
         <Col className="d-flex justify-content-center align-items-end">
           <RBImage
-            src="/images/boy.jpg"
+            src={compPath}
             rounded
             style={{
               width: `${humanWidth * 90}%`,
