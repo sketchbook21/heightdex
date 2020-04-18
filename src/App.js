@@ -83,9 +83,12 @@ const App = () => {
   let content;
   if (loading) {
     content = (
-      <Container className="h-100">
-        <Spinner animation="border" variant="warning" />
-      </Container>
+      <div
+        id="spinner-container"
+        className="d-flex align-items-center align-self-center "
+      >
+        <Spinner animation="grow" variant="warning" />
+      </div>
     );
   } else {
     content = (
