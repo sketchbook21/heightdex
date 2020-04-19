@@ -116,7 +116,7 @@ const CompDisplay = ({ pokemon, selectedComp, customHeight, compLoading }) => {
       <Container>
         <Row className="d-flex justify-content-center">
           <Badge className="mt-3 mb-2" pill variant="warning">
-            Height
+            {pokemon.name} Height
           </Badge>
         </Row>
         <Row className="d-flex justify-content-center mb-3" id="comp-height">
