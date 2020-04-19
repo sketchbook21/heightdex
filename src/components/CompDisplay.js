@@ -8,14 +8,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import compHeights from "../helpers/compHeights";
-
-const convertToInches = (centimeters) => {
-  const totalInches = Math.round(centimeters / 2.54);
-  const feet = Math.floor(totalInches / 12);
-  const inches = totalInches % 12;
-
-  return { feet, inches };
-};
+import { convertToInches } from "./CompSelector";
 
 const CompDisplay = ({ pokemon, selectedComp, customHeight, compLoading }) => {
   const [dimensions, setDimensions] = useState({ width: 360, height: 337 });

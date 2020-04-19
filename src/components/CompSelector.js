@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import compHeights from "../helpers/compHeights";
 
-const convertToInches = (centimeters) => {
+export const convertToInches = (centimeters) => {
   const totalInches = Math.round(centimeters / 2.54);
   const feet = Math.floor(totalInches / 12);
   const inches = totalInches % 12;
@@ -17,7 +17,7 @@ const convertToInches = (centimeters) => {
   return { feet, inches };
 };
 
-const convertToCm = (inches) => {
+export const convertToCm = (inches) => {
   const cm = Math.round(inches * 2.54);
 
   return cm;
