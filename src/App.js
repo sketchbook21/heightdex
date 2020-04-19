@@ -17,7 +17,65 @@ const App = () => {
   const [alert, setAlert] = useState(false);
 
   useEffect(() => {
+    const fetchPikachu = async () => {
+      let pikachuData;
+      await fetch(`https://pokeapi.co/api/v2/pokemon/25/`)
+        .then((response) => response.json())
+        .then(
+          (response) =>
+            (pikachuData = {
+              id: response.id,
+              name: capitalizeName(response.name),
+              sprite: response.sprites.front_default,
+              height: response.height,
+            })
+        );
+
+      const description = await fetchDescription(pikachuData);
+
+      pikachuData["description"] = description;
+
+      setSelectedPokemon(pikachuData);
+    };
+
+    const fetchPokemon = async () => {
+      isLoading(true);
+      await fetchPikachu();
+      const pokemon = [];
+      const promises = new Array(807)
+        .fill()
+        .map((value, index) =>
+          fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1}/`)
+        );
+
+      await Promise.all(promises).then((pokemonArr) => {
+        return pokemonArr.map((response) =>
+          response
+            .json()
+            .then(
+              ({ id, name, sprites: { front_default: sprite }, height }) => {
+                if (sprite === null) {
+                  sprite = "/images/pokeball.jpg";
+                }
+                pokemon.push({
+                  id,
+                  name: capitalizeName(name),
+                  sprite,
+                  height,
+                });
+                pokemon.sort((a, b) => {
+                  return a.id > b.id ? 1 : -1;
+                });
+              }
+            )
+        );
+      });
+      setOptions(pokemon);
+      isLoading(false);
+    };
+
     fetchPokemon();
+
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -35,49 +93,40 @@ const App = () => {
     }
   };
 
-  const fetchPokemon = async () => {
-    isLoading(true);
-    const pokemon = [];
-    const promises = new Array(807)
-      .fill()
-      .map((value, index) =>
-        fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1}/`)
-      );
-
-    await Promise.all(promises).then((pokemonArr) => {
-      return pokemonArr.map((response) =>
-        response
-          .json()
-          .then(({ id, name, sprites: { front_default: sprite }, height }) => {
-            const capitalizedName =
-              name.charAt(0).toUpperCase() + name.slice(1);
-            if (sprite === null) {
-              sprite = "/images/pokeball.jpg";
-            }
-            pokemon.push({
-              id,
-              name: capitalizedName,
-              sprite,
-              height,
-            });
-            pokemon.sort((a, b) => {
-              return a.id > b.id ? 1 : -1;
-            });
-          })
-      );
-    });
-    setOptions(pokemon);
-    isLoading(false);
+  const capitalizeName = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
-  const setPokedex = (pokemon) => {
+  const fetchDescription = async (pokemon) => {
+    let flavor_text;
+    await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`)
+      .then((response) => response.json())
+      .then((response) =>
+        response.flavor_text_entries.some((entry) => {
+          if (entry.language.name === "en") {
+            const replaceReturns = entry.flavor_text.replace(
+              /\r\n|\n|\r/g,
+              " "
+            );
+            flavor_text = replaceReturns.replace(".", ". ");
+            return;
+          }
+        })
+      );
+
+    return flavor_text;
+  };
+
+  const setPokedex = async (pokemon) => {
     setSearch(pokemon.name);
+    setDisplay(false);
+    const description = await fetchDescription(pokemon);
     setSelectedPokemon({
       id: pokemon.id,
       name: pokemon.name,
       height: pokemon.height,
+      description,
     });
-    setDisplay(false);
   };
 
   let content;
