@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Image as RBImage, Col } from "react-bootstrap";
+import { Container, Row, Image as RBImage, Col, Badge } from "react-bootstrap";
 import compHeights from "../helpers/compHeights";
+
+const convertToInches = (centimeters) => {
+  const totalInches = Math.round(centimeters / 2.54);
+  const feet = Math.floor(totalInches / 12);
+  const inches = totalInches % 12;
+
+  return { feet, inches };
+};
 
 const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
   const [dimensions, setDimensions] = useState({});
@@ -36,9 +44,7 @@ const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
     }
   }
 
-  const pikachuDimensions = { width: 360, height: 337 };
-
-  const pokemonHeight = height * 10;
+  const pokemonHeight = height ? height * 10 : compHeights.pikachu;
   let compHeight;
   let compPath;
   if (selectedComp === "Boy") {
@@ -57,39 +63,61 @@ const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
 
   let pokemonWidth;
   let humanWidth;
-  if (!pokemonHeight) {
-    let humanPixels =
-      pikachuDimensions.height * (compHeight / compHeights.pikachu);
-    pokemonWidth =
-      pikachuDimensions.width / (pikachuDimensions.width + humanPixels);
-    humanWidth = 1 - pokemonWidth;
+  let humanPixels = dimensions.height * (compHeight / pokemonHeight);
+  pokemonWidth = dimensions.width / (dimensions.width + humanPixels);
+  humanWidth = 1 - pokemonWidth;
+
+  let displayContClass;
+  if (pokemonHeight / compHeight > 2 || pokemonHeight / compHeight < 0.5) {
+    displayContClass = "cont alt-comp-width";
   } else {
-    let humanPixels = dimensions.height * (compHeight / pokemonHeight);
-    pokemonWidth = dimensions.width / (dimensions.width + humanPixels);
-    humanWidth = 1 - pokemonWidth;
+    displayContClass = "cont comp-width";
   }
 
+  const feetInchesHeight = convertToInches(pokemonHeight);
+
   return (
-    <Container className="cont">
-      <Row className="d-flex mx-auto">
-        <Col className="d-flex justify-content-center align-items-end">
-          <RBImage
-            src={compPath}
-            rounded
-            style={{
-              width: `${humanWidth * 90}%`,
-            }}
-          />
-          <RBImage
-            src={pokemonUrl}
-            rounded
-            style={{
-              width: `${pokemonWidth * 90}%`,
-            }}
-          />
-        </Col>
-      </Row>
-    </Container>
+    <>
+      <Container className={displayContClass}>
+        <Row className="d-flex mx-auto">
+          <Col className="d-flex justify-content-center align-items-end">
+            <RBImage
+              src={compPath}
+              rounded
+              style={{
+                width: `${humanWidth * 90}%`,
+              }}
+            />
+            <RBImage
+              src={pokemonUrl}
+              rounded
+              style={{
+                width: `${pokemonWidth * 90}%`,
+              }}
+            />
+          </Col>
+        </Row>
+      </Container>
+      <Container>
+        <Row className="d-flex justify-content-center">
+          <Badge className="mt-3 mb-2" pill variant="warning">
+            Height
+          </Badge>
+        </Row>
+        <Row className="d-flex justify-content-center mb-3" id="comp-height">
+          <span className="mr-3">
+            {feetInchesHeight.feet}' - {feetInchesHeight.inches}"
+          </span>
+          |<span className="ml-3">{pokemonHeight} cm</span>
+        </Row>
+        <Row
+          className="d-flex justify-content-center mx-auto"
+          style={{ textAlign: "center", width: "300px" }}
+        >
+          {pokemon.description}
+        </Row>
+      </Container>
+    </>
   );
 };
 
