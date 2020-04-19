@@ -35,34 +35,8 @@ const App = () => {
     }
   };
 
-  const fetchPikachu = async () => {
-    let pikachuData;
-    await fetch(`https://pokeapi.co/api/v2/pokemon/25/`)
-      .then((response) => response.json())
-      .then(
-        (response) =>
-          (pikachuData = {
-            id: response.id,
-            name: capitalizeName(response.name),
-            sprite: response.sprites.front_default,
-            height: response.height,
-          })
-      );
-
-    const description = await fetchDescription(pikachuData);
-
-    pikachuData["description"] = description;
-
-    setSelectedPokemon(pikachuData);
-  };
-
-  const capitalizeName = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  };
-
   const fetchPokemon = async () => {
     isLoading(true);
-    await fetchPikachu();
     const pokemon = [];
     const promises = new Array(807)
       .fill()
@@ -75,12 +49,14 @@ const App = () => {
         response
           .json()
           .then(({ id, name, sprites: { front_default: sprite }, height }) => {
+            const capitalizedName =
+              name.charAt(0).toUpperCase() + name.slice(1);
             if (sprite === null) {
               sprite = "/images/pokeball.jpg";
             }
             pokemon.push({
               id,
-              name: capitalizeName(name),
+              name: capitalizedName,
               sprite,
               height,
             });
@@ -94,36 +70,14 @@ const App = () => {
     isLoading(false);
   };
 
-  const fetchDescription = async (pokemon) => {
-    let flavor_text;
-    await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`)
-      .then((response) => response.json())
-      .then((response) =>
-        response.flavor_text_entries.some((entry) => {
-          if (entry.language.name === "en") {
-            const replaceReturns = entry.flavor_text.replace(
-              /\r\n|\n|\r/g,
-              " "
-            );
-            flavor_text = replaceReturns.replace(".", ". ");
-            return;
-          }
-        })
-      );
-
-    return flavor_text;
-  };
-
-  const setPokedex = async (pokemon) => {
+  const setPokedex = (pokemon) => {
     setSearch(pokemon.name);
-    setDisplay(false);
-    const description = await fetchDescription(pokemon);
     setSelectedPokemon({
       id: pokemon.id,
       name: pokemon.name,
       height: pokemon.height,
-      description,
     });
+    setDisplay(false);
   };
 
   let content;

@@ -9,20 +9,6 @@ import {
 } from "react-bootstrap";
 import compHeights from "../helpers/compHeights";
 
-const convertToInches = (centimeters) => {
-  const totalInches = Math.round(centimeters / 2.54);
-  const feet = Math.floor(totalInches / 12);
-  const inches = totalInches % 12;
-
-  return { feet, inches };
-};
-
-const convertToCm = (inches) => {
-  const cm = Math.round(inches * 2.54);
-
-  return cm;
-};
-
 const CompSelector = ({
   selectedComp,
   setSelectedComp,
@@ -41,6 +27,20 @@ const CompSelector = ({
   } else {
     heightInputPlaceholder = "Centimeters";
   }
+
+  const convertToInches = (centimeters) => {
+    const totalInches = Math.round(centimeters / 2.54);
+    const feet = Math.floor(totalInches / 12);
+    const inches = totalInches % 12;
+
+    return { feet, inches };
+  };
+
+  const convertToCm = (inches) => {
+    const cm = Math.round(inches * 2.54);
+
+    return cm;
+  };
 
   const handleCompChange = ({ name, height }) => {
     setSelectedComp(name);
