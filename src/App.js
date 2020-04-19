@@ -14,9 +14,11 @@ const App = () => {
   const [selectedComp, setSelectedComp] = useState("Boy");
   const [customHeight, setCustomHeight] = useState(0);
   const [loading, isLoading] = useState(false);
+  const [compLoading, isCompLoading] = useState(false);
   const [alert, setAlert] = useState(false);
 
   useEffect(() => {
+    isLoading(true);
     const fetchPikachu = async () => {
       let pikachuData;
       await fetch(`https://pokeapi.co/api/v2/pokemon/25/`)
@@ -39,7 +41,6 @@ const App = () => {
     };
 
     const fetchPokemon = async () => {
-      isLoading(true);
       await fetchPikachu();
       const pokemon = [];
       const promises = new Array(807)
@@ -71,11 +72,11 @@ const App = () => {
         );
       });
       setOptions(pokemon);
-      isLoading(false);
     };
 
     fetchPokemon();
 
+    isLoading(false);
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -119,6 +120,7 @@ const App = () => {
   };
 
   const setPokedex = async (pokemon) => {
+    isCompLoading(true);
     setSearch(pokemon.name);
     setDisplay(false);
     const description = await fetchDescription(pokemon);
@@ -128,6 +130,7 @@ const App = () => {
       height: pokemon.height,
       description,
     });
+    isCompLoading(false);
   };
 
   let content;
@@ -153,11 +156,12 @@ const App = () => {
             setPokedex={setPokedex}
           />
         </Container>
-        <Row>
+        <Row className="d-flex justify-content-center">
           <CompDisplay
             pokemon={selectedPokemon}
             selectedComp={selectedComp}
             customHeight={customHeight}
+            compLoading={compLoading}
           />
         </Row>
       </Container>
