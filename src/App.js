@@ -17,7 +17,65 @@ const App = () => {
   const [alert, setAlert] = useState(false);
 
   useEffect(() => {
+    const fetchPikachu = async () => {
+      let pikachuData;
+      await fetch(`https://pokeapi.co/api/v2/pokemon/25/`)
+        .then((response) => response.json())
+        .then(
+          (response) =>
+            (pikachuData = {
+              id: response.id,
+              name: capitalizeName(response.name),
+              sprite: response.sprites.front_default,
+              height: response.height,
+            })
+        );
+
+      const description = await fetchDescription(pikachuData);
+
+      pikachuData["description"] = description;
+
+      setSelectedPokemon(pikachuData);
+    };
+
+    const fetchPokemon = async () => {
+      isLoading(true);
+      await fetchPikachu();
+      const pokemon = [];
+      const promises = new Array(807)
+        .fill()
+        .map((value, index) =>
+          fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1}/`)
+        );
+
+      await Promise.all(promises).then((pokemonArr) => {
+        return pokemonArr.map((response) =>
+          response
+            .json()
+            .then(
+              ({ id, name, sprites: { front_default: sprite }, height }) => {
+                if (sprite === null) {
+                  sprite = "/images/pokeball.jpg";
+                }
+                pokemon.push({
+                  id,
+                  name: capitalizeName(name),
+                  sprite,
+                  height,
+                });
+                pokemon.sort((a, b) => {
+                  return a.id > b.id ? 1 : -1;
+                });
+              }
+            )
+        );
+      });
+      setOptions(pokemon);
+      isLoading(false);
+    };
+
     fetchPokemon();
+
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
@@ -35,63 +93,8 @@ const App = () => {
     }
   };
 
-  const fetchPikachu = async () => {
-    let pikachuData;
-    await fetch(`https://pokeapi.co/api/v2/pokemon/25/`)
-      .then((response) => response.json())
-      .then(
-        (response) =>
-          (pikachuData = {
-            id: response.id,
-            name: capitalizeName(response.name),
-            sprite: response.sprites.front_default,
-            height: response.height,
-          })
-      );
-
-    const description = await fetchDescription(pikachuData);
-
-    pikachuData["description"] = description;
-
-    setSelectedPokemon(pikachuData);
-  };
-
   const capitalizeName = (name) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
-  };
-
-  const fetchPokemon = async () => {
-    isLoading(true);
-    await fetchPikachu();
-    const pokemon = [];
-    const promises = new Array(807)
-      .fill()
-      .map((value, index) =>
-        fetch(`https://pokeapi.co/api/v2/pokemon/${index + 1}/`)
-      );
-
-    await Promise.all(promises).then((pokemonArr) => {
-      return pokemonArr.map((response) =>
-        response
-          .json()
-          .then(({ id, name, sprites: { front_default: sprite }, height }) => {
-            if (sprite === null) {
-              sprite = "/images/pokeball.jpg";
-            }
-            pokemon.push({
-              id,
-              name: capitalizeName(name),
-              sprite,
-              height,
-            });
-            pokemon.sort((a, b) => {
-              return a.id > b.id ? 1 : -1;
-            });
-          })
-      );
-    });
-    setOptions(pokemon);
-    isLoading(false);
   };
 
   const fetchDescription = async (pokemon) => {
