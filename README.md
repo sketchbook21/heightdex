@@ -4,4 +4,4 @@ HeightDex is a pokemon-inspired project that fetches data from the PokeAPI and a
 
 ### Screenshots
 
-![](images/HeightDex_Screenshots.jpg)
+![](public/images/HeightDex_Screenshots.jpg)
