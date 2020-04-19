@@ -87,6 +87,11 @@ const CompDisplay = ({ pokemon, selectedComp, customHeight, compLoading }) => {
   const displayPokemonName =
     pokemon.name === "Mimikyu-disguised" ? "Mimikyu" : pokemon.name;
 
+  const descriptionTextClass =
+    pokemon.name === "Gyarados" || pokemon.name === "Onix"
+      ? "d-flex justify-content-center mx-auto small-description"
+      : "d-flex justify-content-center mx-auto";
+
   return (
     <>
       <Container className={displayContClass}>
@@ -115,14 +120,14 @@ const CompDisplay = ({ pokemon, selectedComp, customHeight, compLoading }) => {
             {displayPokemonName} Height
           </Badge>
         </Row>
-        <Row className="d-flex justify-content-center mb-3" id="comp-height">
+        <Row className="d-flex justify-content-center mb-2" id="comp-height">
           <span className="mr-3">
             {feetInchesHeight.feet}' - {feetInchesHeight.inches}"
           </span>
           |<span className="ml-3">{pokemonHeight} cm</span>
         </Row>
         <Row
-          className="d-flex justify-content-center mx-auto"
+          className={descriptionTextClass}
           style={{ textAlign: "center", width: "300px" }}
         >
           {pokemon.description}
