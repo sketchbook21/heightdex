@@ -43,10 +43,10 @@ const Footer = () => {
             </p>
             <ul>
               <li className="mb-2">
-                Project built in React with React Bootstrap on hosted on Github
-                Pages
+                Project built in React with React Bootstrap
               </li>
               <li className="mb-2">Pokemon data fetched from PokeAPI</li>
+              <li className="mb-2">Data available up to #807 Zeraora</li>
               <li className="mb-2">
                 All content & design © Pokémon Database, 2008-2020
               </li>
