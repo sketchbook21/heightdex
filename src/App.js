@@ -109,8 +109,9 @@ const App = () => {
               " "
             );
             flavor_text = replaceReturns.replace(".", ". ");
-            return;
+            return true;
           }
+          return false;
         })
       );
 

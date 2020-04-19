@@ -112,7 +112,7 @@ const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
         </Row>
         <Row
           className="d-flex justify-content-center mx-auto"
-          style={{ textAlign: "center", width: "320px" }}
+          style={{ textAlign: "center", width: "300px" }}
         >
           {pokemon.description}
         </Row>
