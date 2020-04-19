@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Image as RBImage, Col, Badge } from "react-bootstrap";
+import {
+  Container,
+  Row,
+  Image as RBImage,
+  Col,
+  Badge,
+  Spinner,
+} from "react-bootstrap";
 import compHeights from "../helpers/compHeights";
 
 const convertToInches = (centimeters) => {
@@ -10,8 +17,8 @@ const convertToInches = (centimeters) => {
   return { feet, inches };
 };
 
-const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
-  const [dimensions, setDimensions] = useState({});
+const CompDisplay = ({ pokemon, selectedComp, customHeight, compLoading }) => {
+  const [dimensions, setDimensions] = useState({ width: 360, height: 337 });
   const [dimFetched, setDimFetched] = useState(false);
   const { name, height } = pokemon;
 
@@ -75,6 +82,14 @@ const CompDisplay = ({ pokemon, selectedComp, customHeight }) => {
   }
 
   const feetInchesHeight = convertToInches(pokemonHeight);
+
+  if (compLoading) {
+    return (
+      <Row className="d-flex align-items-center" style={{ height: "75vh" }}>
+        <Spinner animation="grow" variant="info" />
+      </Row>
+    );
+  }
 
   return (
     <>
