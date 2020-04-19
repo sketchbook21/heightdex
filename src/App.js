@@ -98,8 +98,9 @@ const App = () => {
   };
 
   const fetchDescription = async (pokemon) => {
-    let flavor_text;
-    await fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`)
+    const flavor_text = await fetch(
+      `https://pokeapi.co/api/v2/pokemon-species/${pokemon.id}/`
+    )
       .then((response) => response.json())
       .then((response) =>
         response.flavor_text_entries.some((entry) => {
@@ -108,8 +109,8 @@ const App = () => {
               /\r\n|\n|\r/g,
               " "
             );
-            flavor_text = replaceReturns.replace(".", ". ");
-            return;
+
+            return replaceReturns.replace(".", ". ");
           }
         })
       );
