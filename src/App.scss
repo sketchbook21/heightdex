@@ -15,7 +15,7 @@ html {
 
 body {
   padding: 0;
-  line-height: 1;
+  line-height: 1.25;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
   color: #202020;
@@ -24,27 +24,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  color: #202020;
+}
+
 p.capitalize {
   text-transform: capitalize;
 }
 
 .cont {
-  margin-top: 18vh;
+  margin-top: 16vh;
   text-align: center;
 }
 
 .comp-width {
-  width: 60%;
+  width: 55%;
 }
 
 .alt-comp-width {
-  width: 45%;
+  width: 35%;
 }
 
-.short-cont {
-  margin-top: 20vh;
-  text-align: center;
-  width: 50%;
+.logo {
+  height: 3rem;
 }
 
 .search-container {
@@ -68,13 +70,16 @@ p.capitalize {
   width: auto;
 }
 
-.footer {
-  text-align: center;
+.heightdex-font {
   font-family: "Lilita One", cursive;
-  font-size: 4vh;
   color: #ffc10a;
   text-shadow: 2px 2px black;
-  padding: 0 1.5rem;
+}
+
+.footer {
+  text-align: center;
+  font-size: 4vh;
+  padding: 0 1rem;
 }
 
 #search {
