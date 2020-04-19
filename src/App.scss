@@ -29,10 +29,22 @@ p.capitalize {
 }
 
 .cont {
-  margin-top: 20vh;
-  border-radius: 0.25rem;
+  margin-top: 18vh;
   text-align: center;
-  width: 55%;
+}
+
+.comp-width {
+  width: 60%;
+}
+
+.alt-comp-width {
+  width: 45%;
+}
+
+.short-cont {
+  margin-top: 20vh;
+  text-align: center;
+  width: 50%;
 }
 
 .search-container {
@@ -113,6 +125,10 @@ p.capitalize {
   height: 75vh;
 }
 
+#comp-height {
+  font-weight: 700;
+}
+
 @media (max-width: 600px) {
   .options-container {
     max-height: 65vh;
@@ -128,5 +144,17 @@ p.capitalize {
 
   #input-alert {
     width: 345px;
+  }
+
+  .cont {
+    margin-top: 15vh;
+  }
+
+  .comp-width {
+    width: 100%;
+  }
+
+  .alt-comp-width {
+    width: 100%;
   }
 }
